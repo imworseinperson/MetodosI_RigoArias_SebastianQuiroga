@@ -1,4 +1,6 @@
-x   import os
+## Indice refraccion terminal
+
+import os
 import csv
 import requests
 
@@ -26,4 +28,3 @@ with open('indices_refraccion.csv', 'r', newline='', encoding='utf-8') as csv_fi
 # Crea la carpeta materiles.txt con la lista de los nombres de los materiales
 
 # Import-Csv indices_refraccion.csv | Select-Object -ExpandProperty Material | Out-File -FilePath materiales.txt
-

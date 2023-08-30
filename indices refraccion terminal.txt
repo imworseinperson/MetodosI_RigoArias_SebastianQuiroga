@@ -1,2 +1,0 @@
-# Import-Csv indices_refraccion.csv | Select-Object -ExpandProperty Material | Out-File -FilePath materiales.txt
-
