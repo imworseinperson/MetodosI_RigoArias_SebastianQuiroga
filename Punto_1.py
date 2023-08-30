@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+import numpy as np
 
 # PUNTO 1 #
 
@@ -24,12 +26,37 @@ def tuplas_yml(file_path):
         return data_tuples
 
 
-yml_file = r'C:\Users\rigod\OneDrive\Escritorio\Metodos Grupo\MetodosI_RigoArias_SebastianQuiroga\Adhesivos Ópticos'
-data_tuples = tuplas_yml(yml_file)
+
+data_tuples = tuplas_yml(r"C:\Users\rigod\Documents\Metodos Grupo\MetodosI_RigoArias_SebastianQuiroga\Adhesivos Ópticos\NOA1348.yml")
 print(data_tuples)
 
 
+def graficar_indice_refraccion(data_tuples, material):
+    wavelength = [tupla[0] for tupla in data_tuples]
+    refractive_index = [tupla[1] for tupla in data_tuples]
 
+    plt.figure(figsize=(10, 8))
+
+    plt.title(f"Índice de refracción de {material}")
+
+    plt.xlabel("Longitud de onda (nm)")
+    plt.ylabel("Índice de refracción")
+
+    plt.plot(wavelength, refractive_index)
+
+    plt.grid(True)
+
+    plt.show()
+
+
+
+
+
+
+
+
+
+# PUNTO 2 #
 
 
 
