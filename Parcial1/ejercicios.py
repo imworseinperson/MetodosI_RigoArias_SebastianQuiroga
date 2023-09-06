@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#Derivación punto 8
+
 def Function(x):
     return np.tan(x)
 
