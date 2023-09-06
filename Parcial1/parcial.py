@@ -18,35 +18,34 @@ def muller(x):
 
     i=0
 
-    difx0x1 = (Function(x1)-Function(x0))/(x1-x0)
-    difx1x2 = (Function(x2)-Function(x1))/(x2-x1)
-    segunda = (difx1x2-difx0x1)/(x2-x0)
-    a = segunda
-    b = difx0x1-(x0+x1)*a
-    c = Function(x0)-(x0*difx0x1)+(x0*x1*a)
-
     while (i < 100) and abs((Function(x3)) < 1*(10**-10)):
 
-        if b < 0:
-            x3=(-2*c)/(b-(np.sqrt((b**2)-(4*a*c))))
-        else:
-            x3=(-2*c)/(b-(np.sqrt((b**2)+(4*a*c))))
-        if x3 > 0:
-            x0 = x3
-        else:
-            x1 = x3
-        if x2 > x0 or x2 < x1:
-            x2 = (x0+x1)/2
-        
-        i += 1
-        
         difx0x1 = (Function(x1)-Function(x0))/(x1-x0)
         difx1x2 = (Function(x2)-Function(x1))/(x2-x1)
         segunda = (difx1x2-difx0x1)/(x2-x0)
         a = segunda
         b = difx0x1-(x0+x1)*a
-        c = Function(x0)-(x0*difx0x1)+(x0*x1*a)       
+        c = Function(x0)-(x0*difx0x1)+(x0*x1*a)
+
+        if b < 0:
+            x3=(-2*c)/(b-(np.sqrt((b**2)-(4*a*c))))
+        else:
+            x3=(-2*c)/(b-(np.sqrt((b**2)+(4*a*c))))
+        print(x3)
+        if x3 > 0:
+            x0 = np.argmin(np.abs(Function(x) - x3))
+            x3 = np.argmin(np.abs(Function(x) - x3))
+        else:
+            x1 = np.argmin(np.abs(Function(x) - x3))
+            x3 = np.argmin(np.abs(Function(x) - x3))
+            
+        if x2 > x0 or x2 < x1:
+            x2 = (x0+x1)/2
+        
+        i += 1
+        print(i)
+              
     
     return x3
 
-print(muller(x))
+print(x[muller(x)])
