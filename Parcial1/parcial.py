@@ -18,15 +18,14 @@ def muller(x):
 
     i=0
 
+    difx0x1 = (Function(x1)-Function(x0))/(x1-x0)
+    difx1x2 = (Function(x2)-Function(x1))/(x2-x1)
+    segunda = (difx1x2-difx0x1)/(x2-x0)
+    a = segunda
+    b = difx0x1-(x0+x1)*a
+    c = Function(x0)-(x0*difx0x1)+(x0*x1*a)
+
     while (i < 100) and abs((Function(x3)) < 1*(10**-10)):
-
-        difx0x1 = (Function(x1)-Function(x0))/(x1-x0)
-        difx1x2 = (Function(x2)-Function(x1))/(x2-x1)
-        segunda = (difx1x2-difx0x1)/(x2-x0)
-        a = segunda
-        b = difx0x1-(x0+x1)*a
-        c = Function(x0)-(x0*difx0x1)+(x0*x1*a)
-
 
         if b < 0:
             x3=(-2*c)/(b-(np.sqrt((b**2)-(4*a*c))))
@@ -40,9 +39,13 @@ def muller(x):
             x2 = (x0+x1)/2
         
         i += 1
-
-        print(x3)
-        print(i)
+        
+        difx0x1 = (Function(x1)-Function(x0))/(x1-x0)
+        difx1x2 = (Function(x2)-Function(x1))/(x2-x1)
+        segunda = (difx1x2-difx0x1)/(x2-x0)
+        a = segunda
+        b = difx0x1-(x0+x1)*a
+        c = Function(x0)-(x0*difx0x1)+(x0*x1*a)       
     
     return x3
 
