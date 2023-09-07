@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import chardet
 
 # PUNTO 1 #
 
 def tuplas_yml(file_path):
     
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         yml_content = file.read()
         
         # Encontrar el inicio y fin de la sección de datos
@@ -25,15 +26,12 @@ def tuplas_yml(file_path):
             parts_list = list(parts)
             
             if len(parts) == 2:
+                
                 wavelength = float(parts_list[0])
                 refractive_index = float(parts_list[1])
                 data_tuples.append((wavelength, refractive_index))
                 
         return data_tuples
-
-
-
-data_tuples = tuplas_yml(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml\Adhesivos Ópticos\NOA1348.yml")
 
 
 def mean(data_tuples):
@@ -80,7 +78,7 @@ def refractive_index_graph(data_tuples, material):
 
     plt.show()
     
-#print(refractive_index_graph(data_tuples, 'NOA1348'))
+
 
 
 def files_names(carpeta):
@@ -94,10 +92,42 @@ def files_names(carpeta):
 
 
 archivos = files_names(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
-print((archivos))
 
+def save_graph(data_tuples, material, dir_path):
+    
+    wavelength = [tupla[0] for tupla in data_tuples]
+    refractive_index = [tupla[1] for tupla in data_tuples]
+    refractive_index_mean = mean(data_tuples)
+    refractive_index_s_deviation = s_deviation(data_tuples)
 
+    plt.figure(figsize=(10, 8))
 
+    plt.title(f"Índice de refracción de {material}, n promedio = {refractive_index_mean}, desviación estándar = {refractive_index_s_deviation}")
+
+    plt.xlabel("Longitud de onda (nm)")
+    plt.ylabel("Índice de refracción")
+
+    plt.plot(wavelength, refractive_index)
+
+    plt.grid(True)
+
+    plt.savefig(os.path.join(dir_path, f"{material}.png"))
+
+def main(file_path):
+    
+    # Obtener la lista de archivos
+    files = files_names(file_path)
+    for root, directories, files in os.walk(file_path):
+        # Procesar cada archivo
+        for file in files:
+            
+            # Obtener los datos del archivo
+            data_tuples = tuplas_yml(os.path.join(root, file))
+
+            # Guardar la gráfica
+            save_graph(data_tuples, file, root)
+
+main(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
 
 # PUNTO 2 #
 
