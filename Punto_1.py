@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import yaml
 
 # PUNTO 1 #
 
@@ -34,7 +33,7 @@ def tuplas_yml(file_path):
 
 
 
-data_tuples = tuplas_yml(r"C:\Users\rigod\Documents\Metodos Grupo\MetodosI_RigoArias_SebastianQuiroga\Adhesivos Ópticos\NOA1348.yml")
+data_tuples = tuplas_yml(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml\Adhesivos Ópticos\NOA1348.yml")
 
 
 def mean(data_tuples):
@@ -81,34 +80,21 @@ def refractive_index_graph(data_tuples, material):
 
     plt.show()
     
-print(refractive_index_graph(data_tuples, 'NOA1348'))
+#print(refractive_index_graph(data_tuples, 'NOA1348'))
 
 
-def t_files(file_path):
+def files_names(carpeta):
 
-    lista_archivos = os.listdir(file_path)
-    lista_tuplas = []
-    for archivo in lista_archivos:
-        with open(os.path.join(file_path, archivo), "r") as f:
-            datos = yaml.safe_load(f)
-            if "data: |" in datos and "SPECS" in datos:
-                lista_tuplas.append(datos)
-    return lista_tuplas
-
-def crear_graficas(data_tuples):
-    for tupla in data_tuples:
-        refractive_index_graph(tupla)
-
-def main(file_path):
-
-    directorio = file_path
-    lista_tuplas = t_files(directorio)
-    crear_graficas(lista_tuplas)
-
-print(main(r"C:\Users\rigod\OneDrive\Escritorio\MetodosI_RigoArias_SebastianQuiroga-1\Adhesivos Ópticos\NOA1348.yml"))
+    archivos = []
+    for root, directories, files in os.walk(carpeta):
+        for archivo in files:
+            if os.path.isfile(os.path.join(root, archivo)):
+                archivos.append(archivo)
+    return archivos
 
 
-
+archivos = files_names(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
+print((archivos))
 
 
 
