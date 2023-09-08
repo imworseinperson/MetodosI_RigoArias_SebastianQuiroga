@@ -5,33 +5,25 @@ import chardet
 
 # PUNTO 1 #
 
-def tuplas_yml(file_path):
-    
-    with open(file_path, 'r', encoding='utf-8') as file:
-        yml_content = file.read()
-        
-        # Encontrar el inicio y fin de la sección de datos
-        start_index = yml_content.find("data: |")
-        end_index = yml_content.find("SPECS", start_index)
-        data_section = yml_content[start_index:end_index].strip()
-        
+def tuplas_yml(ruta_yml: str) -> list:
+    '''
+    Lee los archivos yml y devuelve la lista de tuplas
+    '''
+    f = open(ruta_yml)
+    texto_archivo = f.read() #text_archivo es un string de todo lo que contiene el archivo
+    f.close()
 
-        # Extraer las tuplas (λi, ni) del texto
-        data_tuples = []
-        
-        data_lines = data_section.split("\n")
-        
-        for line in data_lines[1:]:  # Saltar el primer elemento en blanco
-            parts = line.strip().split()
-            parts_list = list(parts)
-            
-            if len(parts) == 2:
-                
-                wavelength = float(parts_list[0])
-                refractive_index = float(parts_list[1])
-                data_tuples.append((wavelength, refractive_index))
-                
-        return data_tuples
+    lista_unprocessed = texto_archivo.split('data: |\n')[1].split('\nSPECS')[0].split('  - type')[0].strip().split('\n        ')
+    
+    data_tuples = []
+
+    for k in lista_unprocessed:
+        texto = k.split(' ')
+        texto[0] = float(texto[0])
+        texto[1] = float(texto[1])
+        data_tuples.append(tuple(texto))
+
+    return data_tuples
 
 
 def mean(data_tuples):
@@ -80,18 +72,14 @@ def refractive_index_graph(data_tuples, material):
     
 
 
-
 def files_names(carpeta):
 
-    archivos = []
+    names = []
     for root, directories, files in os.walk(carpeta):
         for archivo in files:
             if os.path.isfile(os.path.join(root, archivo)):
-                archivos.append(archivo)
-    return archivos
-
-
-archivos = files_names(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
+                names.append(archivo)
+    return names
 
 def save_graph(data_tuples, material, dir_path):
     
@@ -116,16 +104,23 @@ def save_graph(data_tuples, material, dir_path):
 def main(file_path):
     
     # Obtener la lista de archivos
-    files = files_names(file_path)
-    for root, directories, files in os.walk(file_path):
-        # Procesar cada archivo
-        for file in files:
-            
-            # Obtener los datos del archivo
-            data_tuples = tuplas_yml(os.path.join(root, file))
+    names = files_names(file_path)
+    print(names)
+    
+    for n in names:
+        file_path = file_path + "\\" + n
+        print(n)
+        #print(file_path)
+        
+        for root, directories, files in os.walk(file_path):
+            # Procesar cada archivo
+            for file in files:
+                
+                # Obtener los datos del archivo
+                data_tuples = tuplas_yml(os.path.join(root, file))
 
-            # Guardar la gráfica
-            save_graph(data_tuples, file, root)
+                # Guardar la gráfica
+                save_graph(data_tuples, file, root)
 
 main(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
 
