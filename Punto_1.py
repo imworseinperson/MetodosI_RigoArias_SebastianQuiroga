@@ -104,25 +104,24 @@ def save_graph(data_tuples, material, dir_path):
 def main(file_path):
     
     # Obtener la lista de archivos
-    names = files_names(file_path)
-    print(names)
+
     
-    for n in names:
-        file_path = file_path + "\\" + n
-        print(n)
-        #print(file_path)
-        
-        for root, directories, files in os.walk(file_path):
+    for root, directories, files in os.walk(file_path):
             # Procesar cada archivo
-            for file in files:
+        for file in files:
                 
-                # Obtener los datos del archivo
-                data_tuples = tuplas_yml(os.path.join(root, file))
+            # Obtener los datos del archivo
+            data_tuples = tuplas_yml(os.path.join(root, file))
 
-                # Guardar la gráfica
-                save_graph(data_tuples, file, root)
+            # Guardar la gráfica
+            save_graph(data_tuples, file, root)
 
-main(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml")
+main(r"C:\Users\rigod\Documents\MetodosI_RigoArias_SebastianQuiroga\archivos_yml\Materia Orgánica")
+
+# Para el punto 1 no logre hacer que iterara, sin embargo, considero importante mencionar mi analisis. Basicamente cree la
+# funcion files_names para tener una lista con los nombres de cada archivo .yml, esto para luego usarlo como variable en la 
+# funcion main() haciendo que itere por estos archivos, cambiando el nombre de ruta, sin embargo, no puude entrar en cada carpeta 
+# para luego llamar el archivo, ahi falle :(. Igual realmente sabia que hacer, era solo para comentar xd. bai, exitos!
 
 # PUNTO 2 #
 
