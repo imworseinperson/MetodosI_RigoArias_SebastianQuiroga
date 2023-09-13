@@ -16,6 +16,7 @@ def tuplas_yml(ruta_yml: str) -> list:
     lista_unprocessed = texto_archivo.split('data: |\n')[1].split('\nSPECS')[0].split('  - type')[0].strip().split('\n        ')
     
     data_tuples = []
+    
 
     for k in lista_unprocessed:
         texto = k.split(' ')
