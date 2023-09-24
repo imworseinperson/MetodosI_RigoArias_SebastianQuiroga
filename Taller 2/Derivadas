@@ -1,0 +1,55 @@
+import numpy as np
+from scipy.optimize import fsolve
+import matplotlib.pyplot as plt
+
+# Data
+B0 = 0.05  # Teslas
+f = 1000  # Hz
+omega = 3.5  # rad/s
+R = 1.75 * 10**3  # Ohms
+r = 0.25 / 2  # Radio del bucle en metros (dado el diámetro de 25 cm)
+
+t = np.linspace(0, 0.01, 1000)  # Puntos cada 10ms
+
+# Flujo magnetico
+ФB = np.pi * r**2 * B0 * np.sin(omega * t) * np.cos(2 * np.pi * f * t)
+
+# Derivada del Flujo magnetico
+dФB_dt = np.gradient(ФB, t)
+
+# Corriente inducida
+I = -1/R * dФB_dt
+
+def newton_raphson(f, df, x0, tol=1e-6, max_iter=100):
+    x = x0
+    for _ in range(max_iter):
+        x_new = x - f(x) / df(x)
+        if abs(x_new - x) < tol:
+            return x_new
+        x = x_new
+    return x
+
+# Definir la función y su derivada
+freq = 1000  # Hz
+def f(t):
+    return -1/R * np.pi * r**2 * B0 * (omega * np.cos(omega * t) * np.cos(2 * np.pi * freq * t) - 2 * np.pi * freq * np.sin(omega * t) * np.sin(2 * np.pi * freq * t))
+
+def df(t):
+    return -1/R * np.pi * r**2 * B0 * (-omega**2 * np.sin(omega * t) * np.cos(2 * np.pi * freq * t) - 4 * np.pi**2 * freq**2 * np.sin(omega * t) * np.sin(2 * np.pi * freq * t))
+
+# Usar newton_raphson para encontrar los primeros tres ceros de la corriente
+t_initial_guesses = [0.0001, 0.0002, 0.0003]
+zero_current_times = [newton_raphson(f, df, guess) for guess in t_initial_guesses]
+
+print("Los primeros tres instantes de tiempo en los que la corriente es cero son:", zero_current_times)
+
+
+# Crear el gráfico
+plt.plot(t, I)
+plt.title('Corriente inducida en función del tiempo')
+plt.xlabel('Tiempo (s)')
+plt.ylabel('Corriente (A)')
+plt.grid(True)
+plt.show()
+
+
