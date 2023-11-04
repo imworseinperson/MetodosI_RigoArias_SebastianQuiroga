@@ -16,7 +16,7 @@ def solucion(matriz, iters, vector1, vector2):
     return v0
 
 #Parámetros
-#m1=m2=m3=k=1
+#m1=m2=m3=1
 
 m = np.array([[-2,1,0],
               [1,-2,1],
@@ -32,5 +32,5 @@ eMen = (1/(np.dot(np.dot(v1, im), v1.T))) * (-1)
 v2 = solucion(m, 10, random, randomT)
 eMay = (np.dot(np.dot(v2, m), v2.T)) *(-1)
 
-print("Nivel de energía menor y vector propio respectivamente: ", '\n', eMen, '\n', v1)
-print("Nivel de energía mayor y vector propio respectivamente: ", '\n', eMay, '\n', v2)
+print("Frecuencia mínima y vector propio respectivamente: ", '\n', eMen, '\n', v1)
+print("Grecuencia máxima y vector propio respectivamente: ", '\n', eMay, '\n', v2)
