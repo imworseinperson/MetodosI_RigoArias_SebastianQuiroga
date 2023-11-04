@@ -5,6 +5,7 @@ def gauss(A, b):
      M = np.column_stack((A, b))
      print(M)
      n, m = M.shape
+     
      # Recorrer cada fila de la matriz
      for i in range(n):
      # Buscar el pivote más grande en la columna i
@@ -23,8 +24,6 @@ def gauss(A, b):
                factor = M[j, i] / M[i, i]
                M[j] = M[j] - factor * M[i]
                
-          # Crear un vector para almacenar la solución
-          x = np.zeros(n)
           # Resolver el sistema usando sustitución hacia atrás
      for i in range(n - 1, -1, -1):
           x[i] = M[i, -1] / M[i, i]
@@ -36,7 +35,7 @@ def gauss(A, b):
 # Ejemplo de uso de la función gauss
 # Definir la matriz A y el vector b del sistema Ax=b
 A = np.array([[3,1,-1],[1,-2,1],[4,-1,1]])
-b = np.array([2,0,3])
+b = np.array([[2],[0],[3]])
 # Llamar a la función gauss para resolver el sistema
 x = gauss(A, b)
 # Mostrar la solución

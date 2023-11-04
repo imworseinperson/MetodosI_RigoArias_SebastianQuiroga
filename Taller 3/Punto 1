@@ -9,20 +9,19 @@ def multiplicar_matrices(A, B):
     C = np.zeros((m, p))
     
     if n != B.shape[0]:
-        
         return "Las matrices no son multiplicables"
     
     for i in range(m):
         for j in range(p):           
             suma = 0       
             for k in range(n):            
-                suma += A[i, k] * B[k, j]        
+                suma += A[i, k] * B[k, j]     
             C[i, j] = suma
     return C
 
 # a ->
 a1 = np.array([[5, -4, -2], [5, -5, 4], [2, 5, -4], [-5, 4, 3], [3, -4, -3]])
-a2 = np.array([[5], [-2], [-3]])
+a2 = np.array([[5], [-2], [3]])
 print(multiplicar_matrices(a1,a2))
 
 # b ->
