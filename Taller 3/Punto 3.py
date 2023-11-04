@@ -9,14 +9,14 @@ def solucion(matriz, iters, vector1, vector2):
     v0 = normalise(vector1,vector2)
     i=0
     while i < iters:
-        v = np.dot(matriz,v0)
-        vf = normalise(v,v.T)
+        vf = normalise(np.dot(matriz,v0),np.dot(matriz,v0).T)
         v0 = vf
         i += 1
     return v0
 
 #Parámetros
 #m1=m2=m3=1
+#Matriz con los valores k dados
 
 m = np.array([[-2,1,0],
               [1,-2,1],
@@ -33,4 +33,4 @@ v2 = solucion(m, 10, random, randomT)
 eMay = (np.dot(np.dot(v2, m), v2.T)) *(-1)
 
 print("Frecuencia mínima y vector propio respectivamente: ", '\n', eMen, '\n', v1)
-print("Grecuencia máxima y vector propio respectivamente: ", '\n', eMay, '\n', v2)
+print("Frecuencia máxima y vector propio respectivamente: ", '\n', eMay, '\n', v2)
