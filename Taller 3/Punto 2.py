@@ -30,7 +30,7 @@ def eliminacion_gaussiana(A,B):
      ultcolumna = m-1
      x = np.zeros(n,dtype=float)
      
-     for i in range(ultfila,0-1,-1):
+     for i in range(ultfila,-1,-1):
           suma = 0
           for j in range(i+1,ultcolumna,1):
                suma = suma + M[i,j]*x[j]
