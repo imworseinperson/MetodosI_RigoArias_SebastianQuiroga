@@ -1,0 +1,23 @@
+import numpy as np
+import scipy.linalg as la
+
+H = np.array([[1, 2,-1],
+              [1, 0, 1], 
+              [4,-4, 5]])
+
+def potencia_inversa(A):
+
+    sigma = 0
+    # Calcular la matriz (A - sigma * I)
+    B = A - sigma * np.eye(A.shape[0])
+    # Resolver el problema de valores propios de B
+    w, v = la.eig(B)
+    # Encontrar el índice del valor propio con menor magnitud absoluta
+    i = np.argmin(np.abs(w))
+    # Devolver el valor propio y el vector propio correspondientes
+    return w[i] + sigma, v[:, i]
+
+E0, v0 = potencia_inversa(H)
+
+print("El valor del estado base es:", E0)
+print("El vector propio del estado base es:", v0)
