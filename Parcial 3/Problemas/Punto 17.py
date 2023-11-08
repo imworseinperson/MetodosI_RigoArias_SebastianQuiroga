@@ -43,7 +43,6 @@ for i in range(2):
 
 Fn = sp.lambdify([x,y],F,'numpy')
 Mn = sp.lambdify([x,y],M,'numpy')
-p = np.array([0.5, 0.5])
 N = 300
 x = np.linspace(-1,1,N)
 y = np.linspace(-1,1,N)
@@ -51,21 +50,20 @@ a = np.array([-0.5,np.sqrt(3)/2])
 b = np.array([-0.5,-np.sqrt(3)/2])
 c = np.array([1,0])
 
-Fractal = np.zeros((N,N), np.int64)
+Image = np.zeros((N,N), np.int64)
 for i in range(N):
     for j in range(N):
         k = NewtonRapshon(Fn,Mn,np.array([x[i],y[j]]))
-        d0 = np.max(np.abs(a-k))
-        d1 = np.max(np.abs(b-k))
-        d2 = np.max(np.abs(c-k)) 
-        mn = min(d0,d1,d2)
-        if d0  == mn:
-            Fractal[i][j] = 20
-        elif d1 == mn:
-            Fractal[i][j] = 100
+        a2 = np.max(np.abs(a-k))
+        b2 = np.max(np.abs(b-k))
+        c2 = np.max(np.abs(c-k)) 
+        mn = min(a2,b2,c2)
+        if a2  == mn:
+            Image[i][j] = 20
+        elif b2 == mn:
+            Image[i][j] = 100
         else:
-            Fractal[i][j] = 255
+            Image[i][j] = 255
          
-plt.imshow(Fractal, extent=[-1,1,-1,1])
+plt.imshow(Image, extent=[-1,1,-1,1])
 plt.show()
-#Se demora un poco en aparecer la gráfica
