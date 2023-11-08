@@ -47,21 +47,21 @@ p = np.array([0.5, 0.5])
 N = 300
 x = np.linspace(-1,1,N)
 y = np.linspace(-1,1,N)
-z0 = np.array([-0.5,np.sqrt(3)/2])
-z1 = np.array([-0.5,-np.sqrt(3)/2])
-z2 = np.array([1,0])
+a = np.array([-0.5,np.sqrt(3)/2])
+b = np.array([-0.5,-np.sqrt(3)/2])
+c = np.array([1,0])
 
 Fractal = np.zeros((N,N), np.int64)
 for i in range(N):
     for j in range(N):
-        a = NewtonRapshon(Fn,Mn,np.array([x[i],y[j]]))
-        d0 = np.max(np.abs(z0-a))
-        d1 = np.max(np.abs(z1-a))
-        d2 = np.max(np.abs(z2-a)) 
-        minimo = min(d0,d1,d2)
-        if d0  == minimo:
+        k = NewtonRapshon(Fn,Mn,np.array([x[i],y[j]]))
+        d0 = np.max(np.abs(a-k))
+        d1 = np.max(np.abs(b-k))
+        d2 = np.max(np.abs(c-k)) 
+        mn = min(d0,d1,d2)
+        if d0  == mn:
             Fractal[i][j] = 20
-        elif d1 == minimo:
+        elif d1 == mn:
             Fractal[i][j] = 100
         else:
             Fractal[i][j] = 255
