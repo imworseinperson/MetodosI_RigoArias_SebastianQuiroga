@@ -31,17 +31,17 @@ y = sp.Symbol('y',real=True)
 #Procedimiento
 
 f0,f1 = f(x,y)
-F = [f0,f1]
+func = [f0,f1]
 M = sp.zeros(2,2)
 
 for i in range(2):
     for j in range(2):
         if j==0:
-            M[i,j] = sp.diff(F[i],x,1)
+            M[i,j] = sp.diff(func[i],x,1)
         else:
-            M[i,j] = sp.diff(F[i],y,1)
+            M[i,j] = sp.diff(func[i],y,1)
 
-Fn = sp.lambdify([x,y],F,'numpy')
+fn = sp.lambdify([x,y],func,'numpy')
 Mn = sp.lambdify([x,y],M,'numpy')
 N = 300
 x = np.linspace(-1,1,N)
@@ -53,7 +53,7 @@ c = np.array([1,0])
 Image = np.zeros((N,N), np.int64)
 for i in range(N):
     for j in range(N):
-        k = NewtonRapshon(Fn,Mn,np.array([x[i],y[j]]))
+        k = NewtonRapshon(fn,Mn,np.array([x[i],y[j]]))
         a2 = np.max(np.abs(a-k))
         b2 = np.max(np.abs(b-k))
         c2 = np.max(np.abs(c-k)) 
